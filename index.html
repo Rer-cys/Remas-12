@@ -2,59 +2,1434 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ريماس القحطاني | خبيرة أمن سيبراني</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #050a14; color: #d1d1d1; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(to bottom, #0f172a, #1e1b4b); border-bottom: 3px solid #00f2ff; }
-        h1 { color: #00f2ff; font-size: 3em; margin: 0; text-shadow: 0 0 10px #00f2ff; }
-        .section { max-width: 900px; margin: 40px auto; padding: 20px; background: #0b1120; border-radius: 10px; border-right: 5px solid #7c3aed; }
-        h2 { color: #7c3aed; border-bottom: 1px solid #7c3aed; padding-bottom: 10px; }
-        ul { list-style: square; padding-right: 20px; }
-        li { margin-bottom: 10px; }
-        .footer { text-align: center; padding: 20px; font-size: 0.9em; color: #888; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --dark: #050a14;
+            --darker: #020617;
+            --light: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Matrix Background */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(5, 10, 20, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--primary)); }
+            50% { filter: drop-shadow(0 0 20px var(--primary)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 15px;
+            border: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
+            animation: float 3s ease-in-out infinite;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .typewriter {
+            font-size: 1.5em;
+            color: var(--primary);
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .hero-description {
+            font-size: 1.2em;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: rgba(11, 17, 32, 0.5);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #cbd5e1;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(124, 58, 237, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(11, 17, 32, 0.9), rgba(30, 27, 75, 0.9));
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 242, 255, 0.3);
+        }
+
+        .project-header {
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .project-icon {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .project-subtitle {
+            color: var(--accent);
+            font-size: 0.95em;
+        }
+
+        .project-body {
+            padding: 30px;
+        }
+
+        .project-description {
+            margin-bottom: 20px;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .project-features li {
+            padding: 8px 0;
+            padding-right: 25px;
+            position: relative;
+            color: #94a3b8;
+        }
+
+        .project-features li::before {
+            content: '▹';
+            position: absolute;
+            right: 0;
+            color: var(--primary);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-links a {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid var(--secondary);
+            transition: all 0.3s;
+        }
+
+        .project-links a:hover {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: rgba(11, 17, 32, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            color: var(--light);
+        }
+
+        .skill-percent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.05), rgba(124, 58, 237, 0.05));
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .cert-card:hover {
+            transform: translateX(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 242, 255, 0.2);
+        }
+
+        .cert-icon {
+            font-size: 2em;
+            color: var(--accent);
+        }
+
+        .cert-info h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .cert-info p {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
+        /* Terminal Section */
+        .terminal {
+            background: #0f172a;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.red { background: #ef4444; }
+        .terminal-btn.yellow { background: #f59e0b; }
+        .terminal-btn.green { background: #10b981; }
+
+        .terminal-body {
+            color: #10b981;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            margin-bottom: 10px;
+        }
+
+        .terminal-prompt {
+            color: var(--primary);
+        }
+
+        .terminal-command {
+            color: var(--light);
+        }
+
+        .terminal-output {
+            color: #64748b;
+            padding-right: 20px;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: rgba(11, 17, 32, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateX(-10px);
+            border-color: var(--primary);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .contact-details h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .contact-details p, .contact-details a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 242, 255, 0.1);
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.3em;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(2, 6, 23, 0.8);
+            border-top: 1px solid rgba(0, 242, 255, 0.2);
+            color: #64748b;
+        }
+
+        .footer-text {
+            margin-bottom: 10px;
+        }
+
+        .heart {
+            color: var(--danger);
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-text {
+            font-size: 2em;
+            color: var(--primary);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">LOADING SYSTEM...</div>
+    </div>
 
-<div class="hero">
-    <h1>RIMAS ALQAHTANI</h1>
-    <p>Cybersecurity Specialist | خبيرة أمن سيبراني</p>
-</div>
+    <!-- Matrix Background -->
+    <canvas id="matrix-canvas"></canvas>
 
-<div class="section">
-    <h2>النبذة الشخصية | Profile</h2>
-    <p>طالبة أمن سيبراني متميزة في جامعة بيشة، أمتلك شغفاً عميقاً في حماية الفضاء الرقمي. خبرتي العملية تشمل المصادقة البيومترية، اختبار الاختراق، وتقييم المخاطر السيبرانية. أطمح دائماً لتقديم حلول أمنية مبتكرة تواكب التطور التقني المتسارع.</p>
-</div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">&lt;RIMAS /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#about">عني</a></li>
+                <li><a href="#projects">المشاريع</a></li>
+                <li><a href="#skills">المهارات</a></li>
+                <li><a href="#contact">تواصل</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="section">
-    <h2>الخبرات والمشاريع | Experience & Projects</h2>
-    <ul>
-        <li><strong>مشروع التذاكر البيومترية (Face ID):</strong> تطوير نظام أمني متقدم يعتمد على التعرف على الوجه لتقليل الاحتيال، مع ضمان أعلى معايير خصوصية البيانات.</li>
-        <li><strong>هاكاثون جامعة بيشة:</strong> المشاركة الفعالة في تطوير حلول أمنية ذكية ضمن فرق عمل تقنية.</li>
-    </ul>
-</div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="profile-img">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>ريماس القحطاني</h1>
+            <div class="typewriter" id="typewriter"></div>
+            <p class="hero-description">
+                خبيرة أمن سيبراني متخصصة في أنظمة الكشف عن التسلل، المصادقة المستمرة، 
+                وتحليل السلوك الأمني. شغوفة بحماية الفضاء الرقمي وتطوير حلول أمنية مبتكرة.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn">استكشف مشاريعي</a>
+                <a href="https://www.linkedin.com/in/remas-alqahtani-1674b33a8" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
 
-<div class="section">
-    <h2>المهارات التقنية | Technical Skills</h2>
-    <ul>
-        <li><strong>أدوات الأمن السيبراني:</strong> Wireshark, Kali Linux, Metasploit, Burp Suite, Nmap.</li>
-        <li><strong>البرمجة:</strong> Python, C++, Java, JavaScript (مستوى متقدم).</li>
-        <li><strong>الأنظمة وقواعد البيانات:</strong> Linux (Ubuntu/Kali), SQL, MySQL.</li>
-    </ul>
-</div>
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <h2 class="section-title">نبذة عني</h2>
+        <div class="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        طالبة أمن سيبراني في جامعة بيشة، أمتلك شغفاً عميقاً في حماية الفضاء الرقمي 
+                        ومكافحة التهديدات السيبرانية المتطورة. أركز على تطوير حلول أمنية ذكية 
+                        تعتمد على الذكاء الاصطناعي والتعلم الآلي.
+                    </p>
+                    <p>
+                        خبرتي تشمل تطوير أنظمة كشف التسلل المتقدمة (HIDS)، أنظمة المصادقة المستمرة 
+                        باستخدام التحليلات السلوكية (UEBA)، وإنشاء لوحات تحكم أمنية تفاعلية (SOC).
+                    </p>
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-btn red"></div>
+                            <div class="terminal-btn yellow"></div>
+                            <div class="terminal-btn green"></div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">root@rimas:~$</span> 
+                                <span class="terminal-command">whoami</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                Cybersecurity Specialist | AI Security Engineer
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">root@rimas:~$</span> 
+                                <span class="terminal-command">cat mission.txt</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                "Protecting digital assets through innovative security solutions"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="stat-number">2+</span>
+                        <div class="stat-label">مشاريع متقدمة</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">95%</span>
+                        <div class="stat-label">دقة النماذج الذكية</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">4+</span>
+                        <div class="stat-label">شهادات معتمدة</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">24/7</span>
+                        <div class="stat-label">مراقبة أمنية</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="section">
-    <h2>الشهادات المعتمدة | Certifications</h2>
-    <ul>
-        <li>الأمن السيبراني والعمليات - IBM Skills Build (2025).</li>
-        <li>دبلوم علوم البيانات - سيسكو (2026).</li>
-        <li>برمجة بايثون وجافا سكريبت (مستوى متقدم) - منصة سطر (2024).</li>
-        <li>أساسيات الشبكات - سيسكو (2026).</li>
-    </ul>
-</div>
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <h2 class="section-title">المشاريع الأمنية</h2>
+        <div class="projects-grid">
+            <!-- RM Sentinel -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <i class="fas fa-radar"></i>
+                    </div>
+                    <h3 class="project-title">RM_Sentinel</h3>
+                    <p class="project-subtitle">نظام كشف التسلل المتقدم ولوحة SOC التفاعلية</p>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        نظام Host-Based Intrusion Detection System (HIDS) متطور مع مراقبة سلامة الملفات، 
+                        حساب المخاطر الديناميكي، ولوحة تحكم SOC تفاعلية مع خرائط التهديدات والاستجابة الفورية.
+                    </p>
+                    <ul class="project-features">
+                        <li>File Integrity Monitoring (FIM) في الوقت الفعلي</li>
+                        <li>نظام كشف التسلل القائم على المضيف (HIDS)</li>
+                        <li>حساب درجة المخاطر الديناميكية (0-100%)</li>
+                        <li>خرائط تفاعلية للتهديدات مع Geolocation</li>
+                        <li>تنبيهات فورية عبر Telegram</li>
+                        <li>لوحة تحكم SOC متكاملة مع Streamlit</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Plotly</span>
+                        <span class="tech-tag">Watchdog</span>
+                        <span class="tech-tag">Folium</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/ish3-is/RM_Sentinel" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="#" onclick="alert('قريباً: عرض توضيحي مباشر')">
+                            <i class="fas fa-play"></i> Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-<div class="footer">
-    <p>تواصل معي: rta127t@gmail.com | 0590442579</p>
-</div>
+            <!-- UEBA Engine -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="project-title">R-M UEBA AI Engine</h3>
+                    <p class="project-subtitle">نظام المصادقة المستمرة بالذكاء الاصطناعي</p>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        نظام User and Entity Behavior Analytics (UEBA) متطور يستخدم التحليلات الحيوية 
+                        للسلوك (Keystroke Dynamics) للمصادقة المستمرة والتحقق من هوية المستخدم في كل ضغطة زر.
+                    </p>
+                    <ul class="project-features">
+                        <li>المصادقة المستمرة (Continuous Authentication)</li>
+                        <li>تحليل ديناميكيات الكتابة بدقة ميكروثانية</li>
+                        <li>نموذج Random Forest بدقة >95%</li>
+                        <li>وكيل خفي للمراقبة في الخلفية</li>
+                        <li>لوحة SOC متقدمة لمراقبة الانحرافات السلوكية</li>
+                        <li>تكامل مع SIEM و Splunk</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">Random Forest</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Behavioral Biometrics</span>
+                        <span class="tech-tag">Zero Trust</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/ish3-is/R-M-UEBA-AI-Engine" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="#" onclick="alert('قريباً: عرض توضيحي مباشر')">
+                            <i class="fas fa-play"></i> Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <h2 class="section-title">المهارات التقنية</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3><i class="fas fa-shield-alt"></i> الأمن السيبراني</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Intrusion Detection Systems</span>
+                        <span class="skill-percent">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Penetration Testing</span>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">SIEM & SOC Operations</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Threat Intelligence</span>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="80%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> البرمجة والتطوير</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-percent">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">JavaScript/HTML/CSS</span>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">C++ / Java</span>
+                        <span class="skill-percent">75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="75%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">SQL & Databases</span>
+                        <span class="skill-percent">88%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="88%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> الأدوات والتقنيات</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Kali Linux / Wireshark</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Metasploit / Burp Suite</span>
+                        <span class="skill-percent">82%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="82%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Nmap / Network Analysis</span>
+                        <span class="skill-percent">87%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="87%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Git / GitHub</span>
+                        <span class="skill-percent">92%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="92%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-brain"></i> الذكاء الاصطناعي</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Machine Learning</span>
+                        <span class="skill-percent">88%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="88%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Random Forest / AI Models</span>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Data Analytics</span>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Behavioral Analysis</span>
+                        <span class="skill-percent">93%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0%" data-width="93%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="fade-in">
+        <h2 class="section-title">الشهادات المعتمدة</h2>
+        <div class="cert-grid">
+            <div class="cert-card">
+                <div class="cert-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="cert-info">
+                    <h4>الأمن السيبراني والعمليات</h4>
+                    <p>IBM Skills Build - 2025</p>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="cert-info">
+                    <h4>دبلوم علوم البيانات</h4>
+                    <p>Cisco - 2026</p>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="cert-info">
+                    <h4>برمجة Python & JavaScript (متقدم)</h4>
+                    <p>منصة سطر - 2024</p>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="cert-info">
+                    <h4>أساسيات الشبكات</h4>
+                    <p>Cisco - 2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <h2 class="section-title">تواصل معي</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>البريد الإلكتروني</h4>
+                        <a href="mailto:rta127t@gmail.com">rta127t@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>رقم الجوال</h4>
+                        <a href="tel:0590442579">0590442579</a>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>الموقع</h4>
+                        <p>المملكة العربية السعودية</p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>LinkedIn</h4>
+                        <a href="https://www.linkedin.com/in/remas-alqahtani-1674b33a8" target="_blank">
+                            remas-alqahtani
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="terminal" style="height: fit-content;">
+                <div class="terminal-header">
+                    <div class="terminal-btn red"></div>
+                    <div class="terminal-btn yellow"></div>
+                    <div class="terminal-btn green"></div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">visitor@portfolio:~$</span> 
+                        <span class="terminal-command">send_message --to "Rimas"</span>
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        Connecting to secure channel...<br>
+                        ✓ Connection established<br>
+                        ✓ Encryption: AES-256<br>
+                        ✓ Ready to transmit<br><br>
+                        <span style="color: var(--accent);">
+                            [أهلاً بك! أنا متاحة دائماً لمناقشة الفرص والتحديات الأمنية الجديدة]
+                        </span>
+                    </div>
+                    <div class="terminal-line" style="margin-top: 20px;">
+                        <span class="terminal-prompt">visitor@portfolio:~$</span>
+                        <span class="terminal-command" style="animation: blink 1s infinite;">_</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="social-links" style="justify-content: center; margin-top: 50px;">
+            <a href="https://github.com/ish3-is" target="_blank" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/remas-alqahtani-1674b33a8" target="_blank" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:rta127t@gmail.com" class="social-link" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter" onclick="alert('قريباً')">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">
+            تم التطوير بـ <i class="fas fa-heart heart"></i> بواسطة ريماس القحطاني
+        </p>
+        <p>&copy; 2026 جميع الحقوق محفوظة | RM_Sentinel Security Systems</p>
+    </footer>
+
+    <script>
+        // Remove Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Matrix Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+        const matrixArray = matrix.split("");
+
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for(let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00f2ff";
+            ctx.font = fontSize + "px monospace";
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Typewriter Effect
+        const texts = [
+            "Cybersecurity Specialist",
+            "HIDS & SOC Developer",
+            "AI Security Engineer",
+            "UEBA Expert"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+
+        typeWriter();
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -100px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate skill bars
+                    const skillBars = entry.target.querySelectorAll('.skill-progress');
+                    skillBars.forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Blink animation for terminal
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes blink {
+                0%, 50% { opacity: 1; }
+                51%, 100% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.style.color = '';
+                link.style.borderColor = 'transparent';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.style.color = 'var(--primary)';
+                    link.style.borderColor = 'var(--primary)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
